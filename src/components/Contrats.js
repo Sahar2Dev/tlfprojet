@@ -41,7 +41,21 @@ $(document).ready(function () {
   $('#contttrh').DataTable({
     dom: 'Bfrtip',
     buttons: [
-      'copy', 'excel', 'pdf', 'csv','print'
+      {extend:'excel',
+    className:'btn btn-buttondatatable'},
+    {extend:'copy',
+    className:'btn btn-buttondatatable'},
+    {extend:'pdf',
+    orientation: 'landscape',
+    pageSize: 'LEGAL',
+    className:'btn btn-buttondatatable'},
+    {extend:'csv',
+    className:'btn btn-buttondatatable'},
+    {extend:'print',
+    className:'btn btn-buttondatatable'},      
+    
+
+     
     ]
     ,"bDestroy": true
    } )
@@ -85,6 +99,7 @@ const userinfo =useSelector(state => state.userinfo);
               <th scope="col">Date De Recrutement</th>
               <th scope="col">Rappel 1</th>
               <th scope="col">Rappel 2</th>
+             
            
             
             </tr>
@@ -127,7 +142,7 @@ const userinfo =useSelector(state => state.userinfo);
 
 
 
-      viewlistcontrats_rh==true?   
+      viewlistcontrats_rh==true ?   
      <>
      <ScrollContainer>
       <div className="table-responsive">
@@ -141,6 +156,7 @@ const userinfo =useSelector(state => state.userinfo);
               <th scope="col">Date de démarrage</th>
               <th scope="col">Rappel 1</th>
               <th scope="col">Rappel 2</th>
+              <th scope="col">Type du contrat</th>
            
             
             </tr>
@@ -165,6 +181,9 @@ const userinfo =useSelector(state => state.userinfo);
                       </td> 
                       <td>
                    {contrat.rappel2}
+                      </td> 
+                      <td>
+                   {contrat.contratname}
                       </td> 
               
                     </tr>

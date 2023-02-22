@@ -36,7 +36,8 @@ function Ajoutercongé() {
   const [heure_debut, setHeureDebut] = useState('00:00:00.000000');
   const [heure_fin, setHeurefin] = useState('00:00:00.000000');
   const[nbjourretires,setnbjourretires]=useState('')
- const validation ="en_attente";
+ const validation =0;
+ const validationrh =0;
  
  const token = localStorage.getItem('access_token') ? 'Bearer ' +localStorage.getItem('access_token') :null
 
@@ -70,16 +71,14 @@ const[disabl,setDisable]=useState(false)
     e.preventDefault()
   
  const nbjours=parameters.nbjours
-const conge = {nbjours, motif_abs, datedebut, datefin, contact, adresse, employes, validation,datetimereprise,personneinterimaire,commentaire,heure_debut,heure_fin}
+const conge = {nbjours, motif_abs, datedebut, datefin, contact, adresse, employes, validation,validationrh,datetimereprise,personneinterimaire,commentaire,heure_debut,heure_fin}
     if (personneinterimaire=='' || motif_abs=="" ){
    setCheckAlert(true)
-      
     }else if(parameters.length==0) {
 
 setCheckAlertcalculjours(true)
     }
     else{
-
       setDisable(true)
     fetch(url+"demendeconges/" + iduserinfo +"/"+"congé/"+datedebut+"/"+datefin ,
       {
@@ -113,27 +112,20 @@ setCheckAlertcalculjours(true)
 
   return (
     <div>
-    
         <div className="row">
-        
                   <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#ajouterpointage">
                     Demander Un Congé
                   </button>
-
-
                   <div className="modal fade" id="ajouterpointage" role="dialog" aria-labelledby="ajouterpointage" aria-hidden="true">
                     <div className="modal-dialog modal-lg" role="document">
                       <div className="modal-content">
                         <div className="modal-header">
-                          <h5 className="modal-title" id="exampleModalLabel">    Demander Un Congé</h5>
+                          <h5 className="modal-title" id="exampleModalLabel"> Demander Un Congé</h5>
                           <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                             <span aria-hidden="true">&times;</span>
                           </button>
                         </div>
                         <div className="modal-body">
-
-
-
                           <form>
                             <div className='row'>
                             
@@ -157,10 +149,6 @@ setCheckAlertcalculjours(true)
                                       ))}
 
                                     </TextField>
-
-
-
-
                                   </div>
                             </div>
                          {/**   {checked ? "" : */}
@@ -168,12 +156,9 @@ setCheckAlertcalculjours(true)
                               <div className="row">
                                 <div className="col-md-6">
                                   <div className="form-group">
-
-
                                     <input className="form-control" placeholder="Contact" value={contact} name="contact" onChange={(e) => setContact(e.target.value)} type="text" />
 
                                   </div>
-
                                 </div>
                                 <div className="col-md-6">
                                   <div className="form-group">
@@ -181,20 +166,8 @@ setCheckAlertcalculjours(true)
                                     <input className="form-control" placeholder="Adresse" value={adresse} name="adresse" onChange={(e) => setadress(e.target.value)} type="text" />
 
                                   </div>
-
-
                                 </div>
-                                
-                      
-
-
-
                                 </div>
-                               
-                               
-                            
-                                
-                                
                                 <div className='row'>
                                   
                                   {testdemijournne==false?<><div className='col-md-4'>
@@ -221,23 +194,17 @@ setCheckAlertcalculjours(true)
                               <input id="datedebut" className="form-control" placeholder="" min={today.getFullYear()+"-"+(today.getMonth()<10? "0"+today.getMonth():today.getMonth() )+"-20"} value={datedebut} name="date_debut" onChange={(e) => {setDateDebut(e.target.value);setdatefin(e.target.value);SearchpourDemandeConge(e.target.value,e.target.value,nbjourretires,justifie,joursouvres)}} type="date" />
 
                             </div>
-
                           </div>  }
                           <div className='col-md-4 pt-4'>
                 <Autocomplete
-   
    options={users}
    getOptionLabel={(option) => option.user_name +"  " +option.last_name || ""}
-
    renderInput={(params) => (
      <TextField {...params} label="Personne intérimaire" variant="outlined" />
    )}
    onChange={(event, value) =>{if (value && value.id){setPersonneinterimaire(value.id)}}} 
     
  /> 
-
-
-                           
                            </div>
                                 </div>
 

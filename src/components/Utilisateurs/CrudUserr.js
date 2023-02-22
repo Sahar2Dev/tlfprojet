@@ -1,8 +1,4 @@
-
-
 import useFetch from '../useFetch';
-
-
 import * as React from 'react';
 import { useReactToPrint } from "react-to-print";
 import moment from "moment";
@@ -22,41 +18,28 @@ import DialogTitle from '@mui/material/DialogTitle';
 import OutboundIcon from '@mui/icons-material/Outbound';
 import LocalPrintshopIcon from '@mui/icons-material/LocalPrintshop';
 import { useMemo } from 'react';
-
 import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
 import { makeStyles} from "@material-ui/core/styles";
-
 import axios from 'axios';
-
 import Checkbox from "@material-ui/core/Checkbox";
-
 import Mouchard from '../Mouchardd/Mouchard';
-
-
-
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { MenuProps} from "../Rapports/utils";
 import ListItemText from "@material-ui/core/ListItemText";
-
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Backdrop from '@material-ui/core/Backdrop';
 import CircularProgress from '@material-ui/core/CircularProgress';
-
-
 import AjouterSolde from './AjouterSolde';
 import ScrollContainer from 'react-indiana-drag-scroll'
-
 import { Alert } from '@mui/material';
 import $ from "jquery";
-
-
 import { useRef } from 'react';
 import { useSelector } from 'react-redux';
-function ListeUtilisateurs() {
 
+function ListeUtilisateurs() {
   const url=process.env.React_App_URL;
   const userinfo =useSelector(state => state.userinfo);
   const test=userinfo[0]
@@ -64,6 +47,7 @@ function ListeUtilisateurs() {
     var iduserinfo=test['id']
    var view_historique_rh=test['view_historique_rh']
    var admin=test['admin']
+   var DRH=test['DRH']
    var view_employe_rh=test['view_employe_rh']
     
 
@@ -75,27 +59,12 @@ function ListeUtilisateurs() {
   const handlePrint = useReactToPrint({
     content: () => componentRef.current,
   });
-
   const { data: sites, isloading: loz, error: errdv } = useFetch(url+"createlistsite/")
-
   const [openn, setOpenn] = useState(false)
   const [post, setPost] = useState(false)
-const [nomdep,setNomDep]=useState('')
-const [checkalert,setCheckAlert]=useState(false)
-  React.useEffect(() => {
-
-
-    if (users.length == 0) {
-     
-      setOpenn(true)
-      setPost(false)
-
-    } else {
-      setOpenn(false)
-      setPost(true)
-    }
-  }
-    , [openn, post])
+  const [nomdep,setNomDep]=useState('')
+  const [checkalert,setCheckAlert]=useState(false)
+  
 
     function getStatuses(arbor,dat) {
 
@@ -134,7 +103,7 @@ const [checkalert,setCheckAlert]=useState(false)
   const planningsss=[]
 
   //
-  const { data: users = [], isloading, error } = useFetch(url+"UsersOfChef/" + iduserinfo)
+  const { data: users = [], isloading:ilo, error } = useFetch(url+"UsersOfChef/" + iduserinfo)
 
   const [open, setOpen] = useState(false);
   const [openparti, setOpenparti] = useState(false);
@@ -235,12 +204,9 @@ const [sittee,setsitte]=useState('')
   const [nomplannings, setNomPlanings] = useState([])
   function SelectUser(id) {
     setTreeData([])
-  
-    
     fetch(url+"GetUserById/" + id, {
       method: 'get',
       headers: {
-
         'Content-Type': 'application/json',
         Authorization: token,
       },
@@ -248,7 +214,6 @@ const [sittee,setsitte]=useState('')
       result.json().then((resp) => {
    
         setUserId(resp.id)
-     
        setDataUser(resp)
  setActualSelected(resp.arborescence)
  setPlaningEmp(resp.planningemp)
@@ -257,19 +222,12 @@ setDataUserMouchard(resp)
 setNomDepartements(resp.nomdepartements)
 setNomPlanings(resp.nomplannings)
 fetchDepartements(resp.arborescence)
-
-
-
       })
-
- 
-
     }).catch((err)=>{
      
     })
    
   }
-  
   const isAllSelected = plannings.length > 0 && planningemp.length === plannings.length;
   const handleChange = (event) => {
     const value = event.target.value;
@@ -507,7 +465,19 @@ window.location.reload(false)
     })
    
   }
+  React.useEffect(()=>{
 
+    
+    if (users.length==0){
+
+    setOpenn(true)
+  setPost(false)
+  
+    }else{
+    setOpenn(false)
+    setPost(true)}
+  }
+  ,[openn,post])
 
   $(document).ready(function () {
     $('#example').DataTable({
@@ -535,8 +505,6 @@ window.location.reload(false)
   
 });
 
-
-
   return (
     <div>
       <div className="container-fluid mt-5">
@@ -544,18 +512,13 @@ window.location.reload(false)
           <div className="col">
             <div className="card shadow">
             <div className='card-header' style={{ backgroundColor: "#5ac2df" }}>
-                <h3 style={{ color: "white" }}>Employés </h3>
+                <h3 style={{ color: "white" }}>Employés</h3>
               </div>
               <div className="card-header border-0">
                 <div className='row'>
-
                   <AjouterUtilisateur />
-
-                  {view_historique_rh==true ||admin==true ?<AjouterSolde/>:""}
-
-                 
-                  <div  >
-                  
+                  {view_historique_rh==true ||admin==true || DRH == true ?<AjouterSolde/>:""}
+                  <div >
                   </div>
                 </div>
               </div>
@@ -582,7 +545,6 @@ window.location.reload(false)
     <tbody>
       
     {users.filter(x=>x.is_active==true).map(us=>
-      
 <>  
 <tr>
 <td>{us.user_name}  {us.last_name}</td>
@@ -599,12 +561,16 @@ window.location.reload(false)
               className={classes.icon}
             /></a>
           </div>
-{view_employe_rh==true ? "":        ( <> <div className="col-md-3">
+{view_employe_rh==true ? "":        ( <> 
+
+{DRH==true ?
+""
+:<div className="col-md-3">
 
 <a onClick={() => { handleClickOpenparti(); setUserIddeleteparti(us.id); setSelectedatedemaarge(us.datedemarrage) }}  ><OutboundIcon className={classes.icon} /></a>
 
 
-</div>
+</div>}
 <div className="col-md-3">
 <a onClick={() => { handleClickOpen(); setUserIddelete(us.id) }}  ><DeleteIcon className={classes.icon} /></a>
 </div></>)}
@@ -653,7 +619,7 @@ window.location.reload(false)
                         </Button>
                       </DialogActions>
                     </Dialog>
-                    <Dialog
+  <Dialog
 
                       BackdropProps={{ invisible: true }}
                       className={classes.dialog}
@@ -692,7 +658,7 @@ window.location.reload(false)
 </div>  
 
 
-                : (<>{users.length == 0 ? <Backdrop open={openn}>
+                : (<>{users.length == 0 && ilo==true? <Backdrop open={openn}>
                   <CircularProgress style={{ top: '50%' }} color="black" />
                 </Backdrop> : setPost(true)}</>)
 

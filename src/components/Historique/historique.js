@@ -32,23 +32,14 @@ const Historique = () => {
     icon: {
       marginRight: 10,
       marginLeft: 10,
-      color: '#5ac2df'
-
-
-
-
-
-
-      ,
-
+      color: '#5ac2df',
     },
     dialog: {
-
       boxShadow: 'none',
     }
   });
   const classes = useStyle()
-const[userId,setUserID]=useState('')
+  const[userId,setUserID]=useState('')
   const [historiqueIddelete, setHistoriqueIddelete] = useState(null)
   const[openn,setOpenn]=useState(false)
   const [post,setPost]=useState(false)
@@ -64,16 +55,7 @@ const[userId,setUserID]=useState('')
   };
 
   React.useEffect(()=>{
-
     
-    if (mouchard.length==0){
-  
-    setOpenn(true)
-  setPost(false)
-  
-    }else{
-    setOpenn(false)
-    setPost(true)}
   }
   ,[openn,post])
   $(document).ready(function () {
@@ -93,10 +75,7 @@ const[userId,setUserID]=useState('')
       {extend:'csv',
       className:'btn btn-buttondatatable'},
       {extend:'print',
-      className:'btn btn-buttondatatable'},      
-      
-
-       
+      className:'btn btn-buttondatatable'},         
       ]
       ,"bDestroy": true
      } )
@@ -109,23 +88,22 @@ const[userId,setUserID]=useState('')
       fetch(url+'DeleteHistorique_solde/' + id, {
         method: 'DELETE',
         headers: {
-  
           'Content-Type': 'application/json',
           Authorization:token
         },
-      }).then(() => {
+      }).then((res)=>{
+        return  res.json();
+    }).then((resp) => {
         setOpen(false);
-        Mouchard("en cours ", "Historique solde supprimé", userId, iduserinfo, "Suppression d'historique solde pour employé")
+        //console.log(resp.soldeemploye)
+        Mouchard(resp.soldeemploye, resp.solde, userId, iduserinfo, "Suppression d'historique solde pour employé")
        window.location.reload(false);
       }
       ).catch((e) => {
-
      /**   if ( e.response.status=== 401) {
             logoutfunction(e.response.status)
           } */
     })
-  
-  
     }
     return (
       <div className="container-fluid mt-5">
@@ -138,53 +116,36 @@ const[userId,setUserID]=useState('')
             <ScrollContainer className="scroll-container">
             {post?
       <div className="table-responsive">
-   
       <table className="display" id="datatable">
         <thead className="thead-light">
           <tr>
-            
-           
             <th scope="col" style={{width:"20%"}}>Date</th>
             <th scope="col" style={{width:"10%"}}>personne qui a modifié</th>
             <th scope="col" style={{width:"10%"}} >Employé</th>
-    
-          
             <th scope="col" style={{width:"7%"}} >Anc.Solde</th>
             <th scope="col" style={{width:"7%"}}>Nou.Solde</th>
             <th scope="col" style={{width:"7%"}}>Solde</th>
             <th scope="col" style={{width:"7%"}}>Solde ajouté</th>
-
             <th scope="col" style={{width:"22%"}}>Commentaire</th>
-            {admin==false?"":           <th scope="col"  style={{width:"10%"}}>Action</th>}
+            {admin==false?"":<th scope="col"  style={{width:"10%"}}>Action</th>}
           </tr>
         </thead>
         <tbody>
-      
-
           {mouchard.map(m =>
                   <tr key={m.id}>
-                       <td>{m.datenow}</td>
-                      
-                       <td>   {users.length!=0? users.filter(x=>x.id==m.idper_modifie).map(x=><>{x.user_name}  {x.last_name}</>):""}</td>
-                      
+                 <td>{m.datenow}</td>
+                 <td>   {users.length!=0? users.filter(x=>x.id==m.idper_modifie).map(x=><>{x.user_name}  {x.last_name}</>):""}</td>
                  <td>{m.employee}  {m.last_name}</td>
-            
-             
-                    <td>{m.anciennevaluer}</td>
+                 <td>{m.anciennevaluer}</td>
                  <td>{m.nouvellevaluer}</td>
                  <td>{m.soldeactuelle}</td>
                  <td>{m.valeursolde_ajoute}</td>
-            
                  <td>{m.commentaire}</td>
                  { admin==false? "":  <td>
                  <a onClick={() => { handleClickOpen(); setHistoriqueIddelete(m.id);setUserID(m.employe) }}  ><DeleteIcon className={classes.icon} /></a>
                  </td>}
-              
                   </tr>
                 )}
-      
-           
-       
         </tbody>
       </table>
       
@@ -221,10 +182,6 @@ aria-describedby="alert-dialog-description"
 } 
 </ScrollContainer>   
       </div> 
-
-
-
-
       </div></div></div>
    
       )

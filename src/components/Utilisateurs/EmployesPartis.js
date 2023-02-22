@@ -1,6 +1,7 @@
 import React from "react"
 import useFetch from "../useFetch";
 import { useSelector } from 'react-redux';
+import { data } from "jquery";
 const EmployesPartis = () => {
   const url=process.env.React_App_URL;
   const userinfo =useSelector(state => state.userinfo);
@@ -13,6 +14,7 @@ const EmployesPartis = () => {
     
   }
     const { data: users = [], isloading, error } = useFetch(url+"UsersOfChef/" + iduserinfo)
+  
     return (  
         <div className="container-fluid mt-5">
         <div className="row">
@@ -43,8 +45,8 @@ const EmployesPartis = () => {
                       <tr key={user.id}>
                         <td>{user.matricule}</td>
                         <td>{user.user_name}</td>
-                        <td>{user.roles}</td>
-                        <td>    {user.motifparti}</td>
+                        <td>{user.role}</td>
+                        <td>{user.motifparti}</td>
                    {/**     <td>    <img src={user.image} className="imagepetit" /></td> */}
                   
 

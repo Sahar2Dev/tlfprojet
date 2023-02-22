@@ -22,7 +22,8 @@ function AjouterUneautorisation() {
   const [employes, setEmployes] = useState(iduserinfo);
   const [heure_debut, setHeureDebut] = useState('');
   const [heure_fin, setHeurefin] = useState('');
-  const validation = "en_attente"
+  const validation = 0;
+  const validationrh = 0
   const [date_autorisation, setDateAutorisation] = useState(null)
 
   const [personneinterimaire, setpersonneinterimaire] = useState('')
@@ -51,7 +52,7 @@ const[alertheures,setAlertHeures]=useState(false)
 
 
 
-      const conge = { contact, adresse, employes, validation, date_autorisation, heure_debut, heure_fin, personneinterimaire, datetimereprise, commentaire }
+      const conge = { contact, adresse, employes, validation,validationrh, date_autorisation, heure_debut, heure_fin, personneinterimaire, datetimereprise, commentaire }
       setDisable(true)
       fetch(url+"demendeconges/" + iduserinfo + "/" + "autorisation/" + date_autorisation + "/" + date_autorisation,
         {

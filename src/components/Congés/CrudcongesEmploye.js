@@ -23,8 +23,6 @@ function CrudcongesEmploye(){
     var iduserinfo=test['id']
     
   }
-
-  
     const { data: conges = [], isloading, error } = useFetch(url+"AffichageDemendesConges/"+iduserinfo)
     return(
     <div>
@@ -45,42 +43,26 @@ function CrudcongesEmploye(){
     <tr>
 
      <th style={{width:"10%"}} scope="col">Employé</th>
-    
       <th style={{width:"10%"}} scope="col">début</th>
       <th style={{width:"10%"}} scope="col">fin</th>
-   
       <th style={{width:"10%"}} scope="col">Contact</th>
       <th style={{width:"10%"}} scope="col">Adresse</th>
-      
-  
       <th style={{width:"10%"}} scope="col">état</th>
-      
       <th style={{width:"10%"}} scope="col">Personne intérimaire</th>
       <th style={{width:"10%"}} scope="col">Commentaire</th>
       <th style={{width:"10%"}} scope="col">Nb.jours demandés</th>
       <th style={{width:"10%"}} scope="col">Solde</th>
-     
-    
-  
-      
     {/**  <th scope="col">Action</th> */}
     </tr>
   </thead>
   <tbody>
-
-     
     {conges.filter(x=> x.mission==false && x.date_autorisation==null).map(conge =>
           <tr key={conge.idconge}>
-              <td>{conge.user_name +" "+conge.last_name }</td>
-             
+           <td>{conge.user_name +" "+conge.last_name }</td>
            <td>{conge.datedebut}</td>
            <td>{conge.datefin}</td>
-
            <td>{conge.contact}</td>
-           
            <td>{conge.adresse}</td>
-         
-       
            <td>{conge.validation}</td>
            <td>{conge.personneinterimaire}</td>
            <td>{conge.commentaire}</td>

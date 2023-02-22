@@ -276,7 +276,7 @@ useEffect(()=>{
 </tr>
 <tr>
 <th scope="row"><h2>Avis Rh</h2></th> 
-<td><h2> {x.validationrh=="null"? "en_attente" : x.validationrh }</h2></td>
+<td><h2> {x.validationrh=="null"? 0 : x.validationrh }</h2></td>
 </tr>
 
     </>

@@ -145,13 +145,13 @@ window.location.reload(false)
 const [nomuser,SetNomUser]=useState('')
     const { data: planing = [], isloa, er } = useFetch(url+"planning/");
     const [id, setIdPlanning] = useState('')
-    const { data: Usersbyplaning = [], isload, ere } = useFetch(url+"GetUsersbyplanings/" + id);
+    const { data: Usersbyplaning = [], isload, ere } = useFetch(url+"GetUsersbyplanings/" + iduserinfo + "/" + id);
     const columns = [
         { field: 'matricule', headerName: 'Matricule', width: 130,headerClassName: 'super-app-theme--header',flex:1},
        
         { field: 'user_name', headerName: 'Nom', width: 100,headerClassName: 'super-app-theme--header' ,flex:1},
         { field: 'last_name', headerName: 'Prénom', width: 96 ,headerClassName: 'super-app-theme--header',flex:1},
-        { field: 'nomplanning', headerName: 'Nom Planning', width: 96 ,headerClassName: 'super-app-theme--header',flex:1},
+       // { field: 'nomplanning', headerName: 'Nom Planning', width: 96 ,headerClassName: 'super-app-theme--header',flex:1},
         {
             field: "action1",
             headerName: "Validation",
@@ -161,7 +161,6 @@ const [nomuser,SetNomUser]=useState('')
              renderCell: (params) => {
       
      
-        
               return <a onClick={() => {setidplanActuelle(params.row.idplanactuelle);setIdUseractuelle(params.row.iduseractuelle);SetNomUser(params.row.user_name+" "+params.row.last_name)}} data-toggle="modal" data-target="#modalcontrat" ><EditIcon
               className={classes.icon}
             /></a>;

@@ -35,6 +35,7 @@ function CrudCongéDRH() {
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
    var DRH=test['DRH']
+   var admin=test['admin']
    var rolename=test['rolename']
    var iddep=test['iddep']
    var emaildrh=test['emaildrh']
@@ -179,13 +180,13 @@ function CrudCongéDRH() {
 
     if (DRH == true) {//ken employé eli d5al RH (3ando role rh et appartient à département x ou rh de département x)
      
-      if (validationrhh != "validé par rh") {
+      if (validationrhh != 4) {
       //  sendMail(emaildrh,"IPS Time:  Avis Favorable pour la demande du congé "+user_name ,"Bonjour, La demande de congé du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est validé par avec un avis favorable !")
         sendMail(emailemploye, "IPS Time: Avis Favorable pour la demande du congé", "Bonjour  " + user_name  + ", Votre RH a validé le congé de votre demande du " + datedebut + " au " + datefin + "  L'avis de chef est importante pour la confirmation définitive!")
         sendMail(emailchef,"IPS Time:  Avis Favorable par rh pour la demande du congé  "+user_name  ," Bonjour, La demande de congé du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est validé avec un avis favorable par  rh  !")  
-        const validationrh = "validé par rh"
+        const validationrh = 4
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return ValiderConge(id, iduserr, datedebut, datefin, validation, validationrh)
 
         }
@@ -206,11 +207,11 @@ function CrudCongéDRH() {
    {/**    else if (idrh==iduserinfo) {//ken employé eli d5al RH (3ando role rh et appartient à département x ou rh de département x)
       //array1.find(element => element > 10);
    
-      if (validationrhh != "validé par rh") {
+      if (validationrhh != 4) {
         sendMail(emailemploye, "IPS Time:Avis Favorable pour la demande du congé", "Bonjour " + user_name + "  " + ",  Votre RH a validé le congé de votre demande du " + datedebut + " au " + datefin + " .   L'avis de chef est importante pour la confirmation définitive!")
-        const validationrh = "validé par rh"
+        const validationrh = 4
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return ValiderConge(id, iduserr, datedebut, datefin, validation, validationrh)
         }
         else {
@@ -231,17 +232,17 @@ function CrudCongéDRH() {
 
     if (DRH==true) {
 
-      if (validationrhh != "refusé par rh") {
+      if (validationrhh != 5) {
       //  sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande du congé "+user_name ," Bonjour, La demande de congé du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
         sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé", "Bonjour  " + user_name + " " +  ",  Votre RH a refusé le congé de votre demande du " + datedebut + " au " + datefin + ".  L'avis de chef est importante pour la confirmation définitive!")
     
     
         sendMail(emailchef,"IPS Time:  Avis défavorable par  rh pour la demande du congé "+user_name ," Bonjour, La demande de congé du collaborateur "+user_name +"  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable par  rh !")
 
-        const validationrh = "refusé par rh"
+        const validationrh = 5
 
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return RefuserConge(id, iduserr, datedebut, datefin, validation, validationrh)
 
         }
@@ -261,11 +262,11 @@ function CrudCongéDRH() {
     else {
       alert('L employé de ce congé a un chef/RH ')
     }{/**      else if (idrh ==iduserinfo) {//ken employé eli d5al RH (3ando role rh et appartient à département x ou rh de département x)
-      if (validationrhh != "refusé  par rh") {
+      if (validationrhh != 5) {
         sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé", "Bonjour  " + user_name + " " +  ", Votre RH a refusé le congé de votre demande du " + datedebut + " au " + datefin + " L'avis de chef est importante pour la confirmation définitive!")
-        const validationrh = "refusé  par rh"
+        const validationrh = 5
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return RefuserConge(id, iduserr, datedebut, datefin, validation, validationrh)
         }
         else {
@@ -279,21 +280,20 @@ function CrudCongéDRH() {
   };
 
   const onClickAnnuler = (id, iduserr, datedebut, datefin, validationn, validationrhh, idchef, idrh, emailemploye, emailchef, user_name, last_name) => {
-
+    
 
     if (DRH==true) {
 
-      if (validationrhh = "validé  par rh") {
+      if (validationrhh = 4) {
       //  sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande du congé "+user_name ," Bonjour, La demande de congé du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
         sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé", "Bonjour  " + user_name + " " +  ",  Votre RH a refusé le congé de votre demande du " + datedebut + " au " + datefin + ".  L'avis de chef est importante pour la confirmation définitive!")
     
-    
         sendMail(emailchef,"IPS Time:  Avis défavorable par  rh pour la demande du congé "+user_name ," Bonjour, La demande de congé du collaborateur "+user_name +"  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable par  rh !")
 
-        const validationrhAnu = "annulé par rh"
+        const validationrhAnu = 6
 
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return AnnulerConge(id, iduserr, datedebut, datefin, validationrhAnu , validation)
 
         }
@@ -313,11 +313,11 @@ function CrudCongéDRH() {
     else {
       alert('L employé de ce congé a un chef/RH ')
     }{/**      else if (idrh ==iduserinfo) {//ken employé eli d5al RH (3ando role rh et appartient à département x ou rh de département x)
-      if (validationrhh != "refusé  par rh") {
+      if (validationrhh !=5) {
         sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé", "Bonjour  " + user_name + " " +  ", Votre RH a refusé le congé de votre demande du " + datedebut + " au " + datefin + " L'avis de chef est importante pour la confirmation définitive!")
-        const validationrh = "refusé  par rh"
+        const validationrh = 5
         if (validationn == '') {
-          const validation = 'en cours'
+          const validation = 0
           return RefuserConge(id, iduserr, datedebut, datefin, validation, validationrh)
         }
         else {
@@ -509,14 +509,14 @@ function CrudCongéDRH() {
   </tr>
 </thead>
 <tbody>
-  {Conges.filter(w=>w.validation=='validé par chef').map(c =>
+  {Conges.filter(w=>w.validation==1).map(c =>
     <tr>
       <td>{c.idconge}</td>
       <td>{c.user_name}</td>
       <td>{c.nomchef}</td>
-      <td>{c.validation}</td>
+      <td>{c.validation ==0 ? "en_attente" : c.validation ==1 ? "validé par chef" : c.validation ==2 ? "refusé par chef":c.validation ==3 ?"annulé par chef":""}</td>
       
-      <td>{c.validationrh}</td>
+      <td>{c.validationrh ==0? "en_attente" :c.validationrh ==4 ? "validé par rh" : c.validationrh ==5 ? "refusé par rh":c.validationrh ==6 ?"annulé par rh":""}</td>
       <td>{c.solde}</td>
       <td>{c.datedebut}</td>
       <td>{c.datefin}</td>
@@ -585,13 +585,12 @@ Détails
 
 </div></td>
        
-{c.validationrh=="validé par rh"  ?
+{ admin==true ?
+""
+:
+c.validationrh==4  ?
 <td>
-<a  className="btn-sm btn-success "  disabled={true} >
 
-Valider
-
-</a>
 &nbsp;
  <a  className="btn-sm btn-info " onClick={() => { handleClickOpenrefus(c.idconge, c.iduser, c.datedebut, c.datefin, c.validation, c.validationrh, c.chef_id, c.rh_id, c.emailemploye, c.email_chef, c.user_name, c.last_name) }} >
 
@@ -624,19 +623,11 @@ aria-describedby="alert-dialog-description"
 </Dialog>
  </td>
 :
-c.validationrh=="annulé par rh" ?
-<td>
-<a  className="btn-sm btn-success">
-Valider
-</a>
-</td>
+c.validationrh==6 ?
+""
 :
-c.validationrh=="refusé par rh" ?
-<td>
-<a  className="btn-sm btn-danger">
-Refuser
-</a>
-</td>
+c.validationrh==5?
+""
 :
 <>
 <td>
@@ -712,7 +703,7 @@ Refuser
 
 
 <td>
-    {rolename=="RH" || DRH==true || iddep!=undefined? 
+    {rolename=="RH" || DRH==true || iddep!=undefined || admin==true? 
     "":
     <a className="btn-sm btn-info" onClick={() => { handleClickOpensupprimer(c.idconge) }}>
 Supprimer

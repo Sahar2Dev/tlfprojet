@@ -1,22 +1,13 @@
 import React from 'react';
-
 import useFetch from '../useFetch';
 import { useSelector } from 'react-redux';
-
-
 import ScrollContainer from 'react-indiana-drag-scroll'
-
-
-
-
 import AjouterUneautorisation from './AjouterUneautorisation';
-
 function Listautorisations(){
   const userinfo =useSelector(state => state.userinfo);
   const test=userinfo[0]
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
-    
   }
   const url=process.env.React_App_URL;
     const { data: conges = [], isloading, error } = useFetch(url+"AffichageDemendesConges/"+iduserinfo)

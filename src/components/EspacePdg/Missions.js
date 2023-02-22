@@ -34,6 +34,7 @@ function Missions(){
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
    var DRH=test['DRH']
+   var admin=test['admin']
    var rolename=test['rolename']
    var iddep=test['iddep']
    var emaildrh=test['emaildrh']
@@ -181,7 +182,7 @@ setIdcongeSupp(ids)
     
     if (idchef==iduserinfo){
 
-        if (validationn!="validé par chef"){
+        if (validationn!=1){
     // sendMail(emailchef,"IPS Time:  Avis Favorable pour la demande du mission "+user_name + "   " ,"Bonjour, La demande de mission du collaborateur "+user_name + "   " +"  du "+datedebut+" au "+datefin+"  est validé avec un avis favorable !")
 
       sendMail(emailemploye,"IPS Time: Avis Favorable pour la demande du mission ","Bonjour "+user_name+" "+",  Votre demande de missions du"+datedebut+" au "+datefin+" a été validée par un avis favorable officiel !")
@@ -191,11 +192,11 @@ setIdcongeSupp(ids)
 
       )
      
-      const validation="validé par chef"
+      const validation=1
     
 
   if (validationrhh==''){
-    const validationrh='en cours'
+    const validationrh=0
     return    ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
   }
@@ -215,14 +216,14 @@ setIdcongeSupp(ids)
         alert('L employé de cette mission a un chef/RH')
       }
   {/**          else if(idrh==iduserinfo){
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
        
         sendMail(emailemploye,"IPS Time: avis favorable pour la demande du mission","Bonjour "+user_name+" "+",  Votre RH a validé le mission de votre demande du " + datedebut + " au " + datefin + " L'avis de chef est importante pour la confirmation définitive!")
         
         
-        const validationrh="validé par rh"
+        const validationrh=4
         if (validationn==''){
-          const validation='en cours'
+          const validation=0
           return      ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
         }
@@ -242,7 +243,7 @@ setIdcongeSupp(ids)
 
 if (idchef==iduserinfo){
 
-    if (validationn!="refusé par chef"){
+    if (validationn!=2){
     
    //   sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande du mission "+user_name + "   "  ,"Bonjour, La demande de mission du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
@@ -252,10 +253,10 @@ if (idchef==iduserinfo){
 
 
     )
-    const validation="refusé par chef"
+    const validation=2
 
 if (validationrhh==''){
-  const validationrh='en cours'
+  const validationrh=0
   return    RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
 }
@@ -273,12 +274,12 @@ else{
   }
   {/**    else if(idrh==iduserinfo){
 
-      if (validationrhh!="refusé  par rh"){
+      if (validationrhh!=5){
     sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande de mission","Bonjour  "+user_name+"  "+",  Votre RH a refusé le mission de votre demande du " + datedebut + " au " + datefin + " L'avis de chef est importante pour la confirmation définitive! ")
-      const validationrh="refusé  par rh"
+      const validationrh=5
 
       if (validationn==''){
-        const validation='en cours'
+        const validation=0
         return  RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)   
 
       }
@@ -305,7 +306,7 @@ const onClickAnnuler = (id, iduserr, datedebut, datefin, validationn, validation
 
   if (idchef == iduserinfo) {
 
-    if (validationn = "validé par chef") {
+    if (validationn = 1) {
    //  sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande du congé "+user_name  ,"Bonjour, La demande de congé du collaborateur "+user_name + "   " +"  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
       sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé du " + datedebut + " au " + datefin, "Bonjour " + user_name + " " + "  La demande de congés du  " + datedebut + " au " + datefin + "   est annulé avec un avis défavorable officiel !")
@@ -314,10 +315,10 @@ const onClickAnnuler = (id, iduserr, datedebut, datefin, validationn, validation
 
 
       )
-      const validationAnu = "annulé par chef"
+      const validationAnu = 3
 
       if (validationrhh == '') {
-        const validationrh = 'en cours'
+        const validationrh = 0
         return Annulermission(id, iduserr, datedebut, datefin, validationAnu,validationrh)
 
       }
@@ -524,9 +525,9 @@ return (
 <td>{c.idconge}</td>
       <td>{c.user_name}</td>
       <td>{c.nomchef}</td>
-      <td>{c.validation}</td>
-
-      <td>{c.validationrh}</td>
+      <td>{c.validation ==0 ? "en_attente" : c.validation ==1 ? "validé par chef" : c.validation ==2 ? "refusé par chef":c.validation ==3 ?"annulé par chef":""}</td>
+      
+      <td>{c.validationrh ==0? "en_attente" :c.validationrh ==4 ? "validé par rh" : c.validationrh ==5 ? "refusé par rh":c.validationrh ==6 ?"annulé par rh":""}</td>
       <td>{c.solde}</td>
       <td>{c.datedebut}  {c.heure_debut}</td>
       <td>{c.datefin}  {c.heure_fin}</td>
@@ -595,13 +596,12 @@ Détails
 
 </div></td>
 
-{c.validation=="validé par chef"  ?
+{admin==true ?
+""
+:
+c.validation==1  ?
 <td>
-<a  className="btn-sm btn-success "  disabled={true} >
 
-Valider
-
-</a>
 &nbsp;
  <a  className="btn-sm btn-info " onClick={() => { handleClickOpenrefus(c.idconge, c.iduser, c.datedebut, c.datefin, c.validation, c.validationrh, c.chef_id, c.rh_id, c.emailemploye, c.email_chef, c.user_name, c.last_name) }} >
 
@@ -636,7 +636,7 @@ aria-describedby="alert-dialog-description"
 
  </td>
 :
-c.validation=="annulé par chef" ?
+c.validation==3 ?
 <td>
 <a  className="btn-sm btn-success "  >
 
@@ -645,13 +645,8 @@ Valider
 </a>
 </td>
 :
-c.validation=="refusé par chef"?
-<td>
-<a className="btn-sm btn-danger " >
-
-Refuser
-       </a>
-       </td>
+c.validation==2?
+""
 :
 
 <>
@@ -724,7 +719,7 @@ Refuser
 
           
 <td>
-{rolename=="RH" || DRH==true || iddep!=undefined? "":
+{rolename=="RH" || DRH==true || iddep!=undefined || admin==true? "":
 <a className='btn-sm btn-info' onClick={()=>{handleClickOpensupprimer(c.idconge)}}>
 Supprimer
         

@@ -28,7 +28,8 @@ function AjouterMission() {
   const [employes, setEmployes] = useState(iduserinfo);
   const [heure_debut, setHeureDebut] = useState('');
   const [heure_fin, setHeurefin] = useState('');
-  const validation="en_attente"
+  const validation=0;
+  const validationrh=0;
   const [date_autorisation, setDateAutorisation] = useState(null)
   const [mission, setMission] = useState(false)
  const[personneinterimaire,setpersonneinterimaire]=useState('')
@@ -44,7 +45,7 @@ const[alerterror,setAlertError]=useState(false)
     e.preventDefault()
    
 const mission=true
-    const conge = { motif_abs, contact, adresse, employes, validation, heure_debut, heure_fin,personneinterimaire,datetimereprise,commentaire,datedebut,datefin,destination,villedepart,transport,mission }
+    const conge = { motif_abs, contact, adresse, employes, validation,validationrh, heure_debut, heure_fin,personneinterimaire,datetimereprise,commentaire,datedebut,datefin,destination,villedepart,transport,mission }
     setDisable(true)
     fetch(url+"demendeconges/" + iduserinfo + "/"+"mission/"+datedebut+"/"+datefin,
       {

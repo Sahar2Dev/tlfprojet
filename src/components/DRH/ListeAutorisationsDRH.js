@@ -29,6 +29,7 @@ const ListeAutorisationsDRH = () => {
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
    var DRH=test['DRH']
+   var admin=test['admin']
    var rolename=test['rolename']
    var iddep=test['iddep']
    var emaildrh=test['emaildrh']
@@ -127,11 +128,6 @@ const [lastnamev,setLastNameV]=useState('')
       
 
 
-
-
-
-
-
   
   
       }
@@ -169,10 +165,6 @@ const [lastnamev,setLastNameV]=useState('')
   };
   
   const ValiderConge =(id,iduser,heuredebut,heurefin,validation,validationrh) => {
-  
- 
-     
-    
     
       fetch(url+'RetrieveUpdateConge/' + id+"/"+validation+"/"+validationrh, {
           method: 'get',
@@ -223,6 +215,34 @@ const [lastnamev,setLastNameV]=useState('')
           } */
     })
     }
+    const AnnulerConge = (id,iduser,heuredebut,heurefin,validation,validationrh) => {
+
+      let List = {validation,validationrh }
+    
+    
+      fetch(url+'RefusConge/' + id, {
+          method: 'PUT',
+          headers: {
+              'Accept': 'application/json',
+              'Content-Type': 'application/json',
+              Authorization:token
+          },
+          body: JSON.stringify(List)
+      }).then(() => {
+        Mouchard("encours","refusé",iduser,iduserinfo,"Refus d'autorisation de " +heuredebut+"au "+heurefin)
+       window.location.reload(false)
+    
+      }
+    
+      ).catch((e) => {
+
+       /** if ( e.response.status=== 401) {
+            logoutfunction(e.response.status)
+          } */
+    })
+    }
+
+
     const[iduser,setIdUser]=useState('')
     const[ddebut,setddebut]=useState('')
     const[dfin,setdfin]=useState('')
@@ -250,15 +270,15 @@ const [lastnamev,setLastNameV]=useState('')
     const onClick = (id,iduserr,datedebut,datefin,validationn,validationrhh,idchef,idrh,emailemploye,emailchef,date_autorisation,user_name,last_name) => {
             
       if(DRH==true){
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
        //sendMail(emaildrh,"IPS Time:  Avis favorable pour la demande d'autorisation "+user_name + "   "  ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " +" de  date "+date_autorisation+"  est validé avec un avis favorable !")
 
           sendMail(emailemploye,"IPS Time:  Avis Favorable pour la demande d autorisation","Bonjour , Votre RH a validé l'autorisation de date "+date_autorisation+" de votre demande  L'avis de chef est importante pour la confirmation définitive")
          sendMail(emailchef,"IPS Time:  Avis favorable par rh pour la demande d'autorisation  "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " + " de date "+date_autorisation+"  est validé avec un avis favorable par rh !")
        
-          const validationrh="validé par rh"
+          const validationrh=4
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return    ValiderConge(id,iduserr,date_autorisation,date_autorisation,validation,validationrh)
 
           }
@@ -281,12 +301,12 @@ const [lastnamev,setLastNameV]=useState('')
         alert('L employé de cette autorisation a un chef/RH')
       }
       {/**     else if(idrh==iduserinfo){
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
         sendMail(emailemploye,"IPS Time:  Avis Favorable pour la demande d autorisation","Bonjour ,Votre RH a validé l'autorisation de date "+date_autorisation+" de votre demande    L'avis de chef est importante pour la confirmation définitive")
    
-        const validationrh="validé par rh"
+        const validationrh=4
         if (validationn==''){
-          const validation='en cours'
+          const validation=0
           return    ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
         }
@@ -306,15 +326,15 @@ const [lastnamev,setLastNameV]=useState('')
          
       if(DRH==true){
 
-        if (validationrhh!="refusé  par rh"){
+        if (validationrhh!=5){
        //  sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande du d'autorisation "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " + "  de date "+date_autorisationf+"  est refusé avec un avis défavorable !")
 
           sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour ,  Votre RH a refusé l' autorisation de date "+date_autorisationf+" de votre demande!   L'avis de chef est importante pour la confirmation définitive!  ")
          sendMail(emailchef,"IPS Time:  Avis défavorable par rh pour la demande d'autorisation "+user_name + "   " ,"Bonjour,  La demande d'autorisation du collaborateur "+user_name + "   " +"  de date "+date_autorisationf+"  est refusé avec un avis défavorable par rh !")
 
-          const validationrh="refusé  par rh"
+          const validationrh=5
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
 
           }
@@ -333,12 +353,12 @@ const [lastnamev,setLastNameV]=useState('')
         }
     {/**     else if(idrh==iduserinfo){
 
-          if (validationrhh!="refusé  par rh"){
+          if (validationrhh!=5){
           sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour ,    Votre RH a refusé l' autorisation de date "+date_autorisationf+" de votre demande!   L'avis de chef est importante pour la confirmation définitive!  ")
          
-          const validationrh="refusé  par rh"
+          const validationrh=5
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
 
           }
@@ -354,6 +374,60 @@ const [lastnamev,setLastNameV]=useState('')
         } */}
        
     };
+    const onClickAnnuler = (id,iduserr,datedebut,datefin,validationn,validationrhh,idchef,idrh,emailemploye,emailchef,date_autorisationf,user_name,last_name) => {
+         
+      if(DRH==true){
+
+        if (validationrhh =4){
+       //  sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande du d'autorisation "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " + "  de date "+date_autorisationf+"  est refusé avec un avis défavorable !")
+
+          sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour ,  Votre RH a refusé l' autorisation de date "+date_autorisationf+" de votre demande!   L'avis de chef est importante pour la confirmation définitive!  ")
+         sendMail(emailchef,"IPS Time:  Avis défavorable par rh pour la demande d'autorisation "+user_name + "   " ,"Bonjour,  La demande d'autorisation du collaborateur "+user_name + "   " +"  de date "+date_autorisationf+"  est refusé avec un avis défavorable par rh !")
+
+          const validationrh=6
+          if (validationn==''){
+            const validation=0
+            return    AnnulerConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
+
+          }
+          else{
+            const validation=validationn
+            return    AnnulerConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
+
+          }
+        }else{
+          alert('l autorisation est déja refusé')
+        }
+      }
+
+   else{
+          alert('L employé de cette autorisation a un chef/RH ')
+        }
+    {/**     else if(idrh==iduserinfo){
+
+          if (validationrhh!=5){
+          sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour ,    Votre RH a refusé l' autorisation de date "+date_autorisationf+" de votre demande!   L'avis de chef est importante pour la confirmation définitive!  ")
+         
+          const validationrh=5
+          if (validationn==''){
+            const validation=0
+            return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
+
+          }
+          else{
+            const validation=validationn
+            return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
+
+          }
+        }else{
+          alert('l autorisation est déja refusé')
+        }
+       
+        } */}
+       
+    };
+
+
     const onClickSupprimer = (ids) => {
       
   
@@ -430,14 +504,15 @@ const [lastnamev,setLastNameV]=useState('')
 </thead>
 <tbody>
 
-  {Conges.filter(w=>w.validation=='validé par chef').map(c =>
+  {Conges.filter(w=>w.validation==1).map(c =>
     <tr>
       <td>{c.idconge}</td>
       <td>{c.user_name}</td>
       <td>{c.nomchef}</td>
-      <td>{c.validation}</td>
-
-      <td>{c.validationrh}</td>
+      <td>{c.validation  ==0 ? "en_attente" : c.validation ==1 ? "validé par chef" : c.validation ==2 ? "refusé par chef":c.validation ==3 ?"annulé par chef":""}</td>
+      
+      <td>{c.validationrh ==0? "en_attente" :c.validationrh ==4 ? "validé par rh" : c.validationrh ==5 ? "refusé par rh":c.validationrh ==6 ?"annulé par rh":""}</td>
+     
    
       <td>{c.date_autorisation}</td>
       
@@ -507,6 +582,59 @@ Détails
    
 
 </div></td>
+{admin==true ?
+""
+:
+c.validationrh==4  ?
+<td>
+
+&nbsp;
+ <a  className="btn-sm btn-info " onClick={() => { handleClickOpenrefus(c.idconge, c.iduser, c.datedebut, c.datefin, c.validation, c.validationrh, c.chef_id, c.rh_id, c.emailemploye, c.email_chef, c.user_name, c.last_name) }} >
+
+ Annuler
+ 
+ </a>
+ <Dialog
+
+BackdropProps={{ invisible: true }}
+className={classes.dialog}
+open={openrefus}
+onClose={handleCloserefus}
+aria-labelledby="alert-dialog-title"
+aria-describedby="alert-dialog-description"
+>
+<DialogTitle id="alert-dialog-title">
+  {"Annuler un congé"}
+</DialogTitle>
+<DialogContent>
+  <DialogContentText id="alert-dialog-description">
+    êtes-vous sûr de vouloir annuler ce congé ?
+  </DialogContentText>
+</DialogContent>
+<DialogActions>
+  <Button onClick={handleCloserefus}>non</Button>
+  <Button onClick={() => { onClickAnnuler(idcongerefus, iduserr, datedebut, datefin, validationn, validationrhh, idchef, idrh, emailemploye, emailchef, user_namef, last_namef) }}>
+    oui
+  </Button>
+</DialogActions>
+</Dialog>
+ 
+
+ </td>
+:
+c.validationrh==6 ?
+""
+:
+c.validationrh==5?
+<td>
+<a className="btn-sm btn-danger " >
+
+Refuser
+       </a>
+       </td>
+:
+<>
+
           <td>
    
         <a className="btn-sm btn-success" onClick={()=>{handleClickOpenvalid(c.idconge,c.iduser,c.datedebut,c.datefin,c.validation,c.validationrh,c.chef_id,c.rh_id,c.emailemploye,c.email_chef,c.date_autorisation,c.user_name,c.last_name)}}>
@@ -515,7 +643,6 @@ Détails
         </a>
         
         <Dialog
-
         BackdropProps={{ invisible: true }}
         className={classes.dialog}
         open={openvalid}
@@ -571,9 +698,12 @@ Détails
         </DialogActions>
         </Dialog>
           </td>
-          
+
+          </>}
+
+
 <td>
-{rolename=="RH" || DRH == true || iddep!=undefined? "":
+{rolename=="RH" || DRH == true || iddep!=undefined || admin==true ? "":
 <a className="btn-sm btn-info" onClick={()=>{handleClickOpensupprimer(c.idconge)}}>
         
 Supprimer

@@ -42,7 +42,8 @@ function AjouterTeletravail() {
   const[commentaire,setCommentaire]=useState('')
   const [heure_debut, setHeureDebut] = useState('00:00:00.000000');
   const [heure_fin, setHeurefin] = useState('00:00:00.000000');
- const validation ="en_attente";
+ const validation =0;
+ const validationrh =0;
 
  const token = localStorage.getItem('access_token') ? 'Bearer ' +localStorage.getItem('access_token') :null
 const teletravail=true;
@@ -51,7 +52,7 @@ const[disabl,setDisable]=useState(false)
 
     e.preventDefault()
     setAlertError(false)
-    const conge = {teletravail, motif_abs, datedebut, datefin, contact, adresse, employes, validation,datetimereprise,personneinterimaire,commentaire,heure_debut,heure_fin}
+    const conge = {teletravail, motif_abs, datedebut, datefin, contact, adresse, employes, validation,validationrh,datetimereprise,personneinterimaire,commentaire,heure_debut,heure_fin}
     setDisable(true)
     fetch(url+"demendeconges/" + iduserinfo+ "/"+"téletravail/"+datedebut+"/"+datefin,
       {

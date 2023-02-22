@@ -29,6 +29,7 @@ const ListeAutorisations = () => {
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
    var DRH=test['DRH']
+   var admin=test['admin']
    var rolename=test['rolename']
    var iddep=test['iddep']
    var emaildrh=test['emaildrh']
@@ -251,7 +252,7 @@ const [lastnamev,setLastNameV]=useState('')
             
 
       if (idchef==iduserinfo){
-        if (validationn!="validé par chef"){
+        if (validationn!=1){
       //  sendMail(emailchef,"IPS Time:  Avis favorable pour la demande d'autorisation "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " + " de date "+date_autorisation+"  est validé avec un avis favorable !")
 
       sendMail(emailemploye,"IPS Time: Avis Favorable pour la demande d autorisation","Bonjour ,  Votre demande d'\ autorisation de date "+date_autorisation+" a été validée par un avis favorable officiel !")
@@ -260,9 +261,9 @@ x.id==iduserr?"":
         sendMail(x.email,"IPS Time:  Avis favorable par chef pour la demande d'autorisation  "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " +" de  date "+date_autorisation+"  est validé avec un avis favorable par chef!")
 
         )
-      const validation="validé par chef"
+      const validation=1
     if (validationrhh==''){
-      const validationrh='en cours'
+      const validationrh=0
       return    ValiderConge(id,iduserr,date_autorisation,date_autorisation,validation,validationrh)
 
     }
@@ -280,12 +281,12 @@ x.id==iduserr?"":
       }
   
     {/**      else if(idrh==iduserinfo){
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
         sendMail(emailemploye,"IPS Time:  Avis Favorable pour la demande d autorisation","Bonjour ,Votre RH a validé l'autorisation de date "+date_autorisation+" de votre demande    L'avis de chef est importante pour la confirmation définitive")
    
-        const validationrh="validé par rh"
+        const validationrh=4
         if (validationn==''){
-          const validation='en cours'
+          const validation=0
           return    ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
         }
@@ -304,7 +305,7 @@ x.id==iduserr?"":
  
 
       if (idchef==iduserinfo){
-        if (validationn!="refusé par chef"){
+        if (validationn!=2){
         //sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande d'autorisation "+user_name + "   " ,"Bonjour,  La demande d'autorisation du collaborateur "+user_name + "   " +"  de date "+date_autorisationf+"  est refusé avec un avis défavorable !")
 
         sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour , Votre demande d'autorisation de date "+date_autorisationf+"  a reçu un avis défavorable officiel !")
@@ -312,10 +313,10 @@ x.id==iduserr?"":
           x.id==iduserr?"":     sendMail(x.email,"IPS Time:  Avis défavorable par chef pour la demande du d'autorisation "+user_name + "   " ,"Bonjour, La demande d'autorisation du collaborateur "+user_name + "   " +"  de date "+date_autorisation+"  est refusé avec un avis défavorable par chef!")
 
         )
-        const validation="refusé par chef"
+        const validation=2
    
     if (validationrhh==''){
-      const validationrh='en cours'
+      const validationrh=0
       return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
 
     }
@@ -334,12 +335,12 @@ x.id==iduserr?"":
         }
     {/**     else if(idrh==iduserinfo){
 
-          if (validationrhh!="refusé  par rh"){
+          if (validationrhh!=5){
           sendMail(emailemploye,"IPS Time: Avis défavorable pour la demande d'autorisation","Bonjour ,    Votre RH a refusé l' autorisation de date "+date_autorisationf+" de votre demande!   L'avis de chef est importante pour la confirmation définitive!  ")
          
-          const validationrh="refusé  par rh"
+          const validationrh=5
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return    RefuserConge(id,iduserr,date_autorisationf,date_autorisationf,validation,validationrh)
 
           }
@@ -366,7 +367,7 @@ x.id==iduserr?"":
 
       if (idchef == iduserinfo) {
   
-        if (validationn = "validé par chef") {
+        if (validationn = 1) {
        //  sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande du congé "+user_name  ,"Bonjour, La demande de congé du collaborateur "+user_name + "   " +"  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
   
           sendMail(emailemploye, "IPS Time: Avis défavorable pour la demande du congé du " + datedebut + " au " + datefin, "Bonjour " + user_name + " " + "  La demande de congés du  " + datedebut + " au " + datefin + "   est annulé avec un avis défavorable officiel !")
@@ -375,10 +376,10 @@ x.id==iduserr?"":
   
   
           )
-          const validationAnu = "annulé par chef"
+          const validationAnu = 3
   
           if (validationrhh == '') {
-            const validationrh = 'en cours'
+            const validationrh = 0
             return Annulerautorisation(id, iduserr, datedebut, datefin, validationAnu,validationrh)
   
           }
@@ -499,10 +500,10 @@ x.id==iduserr?"":
       <td>{c.idconge}</td>
       <td>{c.user_name}</td>
       <td>{c.nomchef}</td>
-      <td>{c.validation}</td>
-
-      <td>{c.validationrh}</td>
-   
+      <td>{c.validation  ==0 ? "en_attente" : c.validation ==1 ? "validé par chef" : c.validation ==2 ? "refusé par chef":c.validation ==3 ?"annulé par chef":""}</td>
+      
+      <td>{c.validationrh ==0? "en_attente" :c.validationrh ==4 ? "validé par rh" : c.validationrh ==5 ? "refusé par rh":c.validationrh ==6 ?"annulé par rh":""}</td>
+     
       <td>{c.date_autorisation}</td>
       
       <td>{c.heure_debut}</td>
@@ -572,13 +573,12 @@ Détails
 
 </div></td>
 
-{c.validation=="validé par chef"  ?
+{admin== true ?
+""
+:
+c.validation==1  ?
 <td>
-<a  className="btn-sm btn-success "  disabled={true} >
 
-Valider
-
-</a>
 &nbsp;
  <a  className="btn-sm btn-info " onClick={() => { handleClickOpenrefus(c.idconge, c.iduser, c.datedebut, c.datefin, c.validation, c.validationrh, c.chef_id, c.rh_id, c.emailemploye, c.email_chef, c.user_name, c.last_name) }} >
 
@@ -613,7 +613,7 @@ aria-describedby="alert-dialog-description"
 
  </td>
 :
-c.validation=="annulé par chef" ?
+c.validation==3 ?
 <td>
 <a  className="btn-sm btn-success "  >
 
@@ -622,13 +622,8 @@ Valider
 </a>
 </td>
 :
-c.validation=="refusé par chef"?
-<td>
-<a className="btn-sm btn-danger " >
-
-Refuser
-       </a>
-       </td>
+c.validation==2?
+""
 :
 <>
 
@@ -701,7 +696,7 @@ Refuser
 
           
 <td>
-{rolename=="RH" || DRH == true || iddep!=undefined? "":
+{rolename=="RH" || DRH == true || iddep!=undefined || admin==true? "":
 <a className="btn-sm btn-info" onClick={()=>{handleClickOpensupprimer(c.idconge)}}>
         
 Supprimer

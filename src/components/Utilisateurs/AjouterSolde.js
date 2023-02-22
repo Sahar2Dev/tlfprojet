@@ -8,34 +8,22 @@ import useFetch from "../useFetch";
 import Autocomplete from '@mui/material/Autocomplete';
 import HistoriqueFunction from "../Historique/HistoriqueFunction";
 import { useSelector } from "react-redux";
+import Mouchard from "../Mouchardd/Mouchard";
 const AjouterSolde = () => {
-
-
     const url=process.env.React_App_URL;
     const userinfo =useSelector(state => state.userinfo);
     const test=userinfo[0]
     if(Object.keys(userinfo).length !=0){ 
       var iduserinfo=test['id']
-     
-      
-  
-      
     }
     const [sol, setSolde] = useState('')
     const [employes, setEmployes] = useState('');
 const [commentaire,setCommentaire]=useState('')
 const[soldeactuelle,setSoldeActuelle]=useState('')
     const { data: employees, isloading: zz, error: ee } = useFetch(url+"user/")
-   
-   
  const token = localStorage.getItem('access_token') ? 'Bearer ' +localStorage.getItem('access_token') :null
-  
     const UpdateSolde= (e) =>{
-        
         e.preventDefault()
-      
-
-   
         fetch(url+'updateSoldeUser/' + employes+"/"+sol, {
           method : "POST" , 
           headers: {
@@ -43,32 +31,27 @@ const[soldeactuelle,setSoldeActuelle]=useState('')
             Accept: 'application/json',
             Authorization: token,
           }
-         
         }).then(() =>{
             if (soldeactuelle=="" || soldeactuelle==null ){
         
                 HistoriqueFunction(0,sol,employes,iduserinfo,sol,commentaire)
-         }else{
-       
-            console.log('aaa',sol)
-           const   solde=sol+soldeactuelle
-             HistoriqueFunction(soldeactuelle,solde,employes,iduserinfo,sol,commentaire)
+           
+            }else{
+            console.log('aaa',sol);
+            console.log("bb",soldeactuelle)
+           const   solde=Number(sol)+soldeactuelle
+           HistoriqueFunction(soldeactuelle,solde,employes,iduserinfo,sol,commentaire);
+           Mouchard(soldeactuelle, solde,employes, iduserinfo,"Ajout du solde pour employé avec une commentaire :" +"  "+ commentaire)
          }
-        // window.location.reload(false)
-
+         window.location.reload(false)
       }).catch((err)=>{
-      
-        
       })
       } 
-
     return (
         <>
             <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#ajoutersolde">
                 Ajouter Solde
             </button>
-
-
             <div className="modal fade" id="ajoutersolde" role="dialog" aria-labelledby="#ajoutersolde" aria-hidden="true">
                 <div className="modal-dialog modal-dialog-centered" role="document">
                     <div className="modal-content">
@@ -85,7 +68,6 @@ const[soldeactuelle,setSoldeActuelle]=useState('')
 
                                 </div>
                                 <div className="form-group">
-
                                 <Autocomplete
 
 options={employees}
@@ -97,11 +79,9 @@ renderInput={(params) => (
 onChange={(event, value) => {if (value && value.id ){setEmployes(value.id)}if(value && value.solde ){setSoldeActuelle(value.solde)}}}
 
 />
-
                                 </div>
                                 <div className='form-group'>
-                         
-                            <textarea placeholder='commentaire' className="form-control" value={commentaire} onChange={(e) => setCommentaire(e.target.value)} rows="4" ></textarea>
+                            <textarea placeholder='commentaire' className="form-control" required  value={commentaire} onChange={(e) => setCommentaire(e.target.value)} rows="4" ></textarea>
 
                             </div>
 

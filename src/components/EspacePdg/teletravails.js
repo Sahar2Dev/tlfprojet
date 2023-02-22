@@ -171,15 +171,15 @@ setIdcongeSupp(ids)
        
       if(DRH==true){
 
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
         // sendMail(emaildrh,"IPS Time:  Avis Favorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " +"  du "+datedebut+" au "+datefin+"  est validé avec un avis favorable !")
 
           sendMail(emailemploye,"IPS Time: Avis favorable pour la demande du téletravail du "+datedebut+" au "+datefin," Bonjour "+user_name+"&nbsp;"+"  La demande de téletravail du  "+datedebut+" au "+datefin+"   a été validé avec un avis favorable officiel !")
           sendMail(emailchef,"IPS Time: Avis favorable par drh pour la demande du téletravail du "+datedebut+" au "+datefin," Bonjour "+user_name+"&nbsp;"+"  La demande de téletravail du  "+datedebut+" au "+datefin+"   a été validé avec un avis favorable officiel !")
  
-          const validationrh="validé par rh"
+          const validationrh=4
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return      ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
           }
@@ -200,16 +200,16 @@ setIdcongeSupp(ids)
       }
   {/**  else    if (idchef==iduserinfo){
 
-        if (validationn!="validé par chef"){
+        if (validationn!=1){
           sendMail(emailchef,"IPS Time:  Avis Favorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " +"  du "+datedebut+" au "+datefin+"  est validé avec un avis favorable !")
 
           sendMail(emailemploye,"IPS Time:  Avis favorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été validé par un avis favorable , L'avis de rh est importante pour la confirmation définitive!")
 
-      const validation="validé par chef"
+      const validation=1
     
 
   if (validationrhh==''){
-    const validationrh='en cours'
+    const validationrh=0
     return    ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
   }
@@ -224,12 +224,12 @@ setIdcongeSupp(ids)
           }  }
           else if(idrh==iduserinfo){
 
-        if (validationrhh!="validé par rh"){
+        if (validationrhh!=4){
        
           sendMail(emailemploye,"IPS Time:  Avis favorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été validé par un avis favorable ")
-          const validationrh="validé par rh"
+          const validationrh=4
         if (validationn==''){
-          const validation='en cours'
+          const validation=0
           return      ValiderConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
         }
@@ -248,17 +248,17 @@ setIdcongeSupp(ids)
 
   
       if(DRH==true){
-        if (validationrhh!="refusé par rh"){
+        if (validationrhh!=5){
         //sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
           sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable officiel !")
           sendMail(emailchef,"IPS Time:  Avis défavorable par drh pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable officiel !")
 
-          const validationrh="refusé par rh"
+          const validationrh=5
 
 
           if (validationn==''){
-            const validation='en cours'
+            const validation=0
             return  RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)   
 
           }
@@ -279,15 +279,15 @@ setIdcongeSupp(ids)
   }
   {/**else  if (idchef==iduserinfo){
 
-    if (validationn!="refusé par chef"){
+    if (validationn!=2){
     
     sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
     sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable , L'avis de rh est importante pour la confirmation définitive!")
-    const validation="refusé par chef"
+    const validation=2
 
 if (validationrhh==''){
-  const validationrh='en cours'
+  const validationrh=0
   return    RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
 }
@@ -301,12 +301,12 @@ else{
     }
     else if(idrh==iduserinfo){
 
-      if (validationrhh!="refusé  par rh"){
+      if (validationrhh!=5){
         sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable définitive!")
-        const validationrh="refusé  par rh"
+        const validationrh=5
 
       if (validationn==''){
-        const validation='en cours'
+        const validation=0
         return  RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)   
 
       }
@@ -326,17 +326,17 @@ const onClickAnnuler = (id,iduserr,datedebut,datefin,validationn,validationrhh,i
 
   
   if(DRH==true){
-    if (validationrhh="validé par rh"){
+    if (validationrhh=4){
     //sendMail(emaildrh,"IPS Time:  Avis défavorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
       sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable officiel !")
       sendMail(emailchef,"IPS Time:  Avis défavorable par drh pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable officiel !")
 
-      const validationrh="annulé par rh"
+      const validationrh=6
 
 
       if (validationn==''){
-        const validation='en cours'
+        const validation=0
         return  AnnulerConge(id,iduserr,datedebut,datefin,validation,validationrh)   
 
       }
@@ -357,15 +357,15 @@ alert('L employé de ce téletravail a un chef/RH')
 }
 {/**else  if (idchef==iduserinfo){
 
-if (validationn!="refusé par chef"){
+if (validationn!=2){
 
 sendMail(emailchef,"IPS Time:  Avis défavorable pour la demande de téletravail "+user_name + "   " ,"Bonjour, La demande de téletravail du collaborateur "+user_name + "   " + "  du "+datedebut+" au "+datefin+"  est refusé avec un avis défavorable !")
 
 sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable , L'avis de rh est importante pour la confirmation définitive!")
-const validation="refusé par chef"
+const validation=2
 
 if (validationrhh==''){
-const validationrh='en cours'
+const validationrh=0
 return    RefuserConge(id,iduserr,datedebut,datefin,validation,validationrh)
 
 }
@@ -379,9 +379,9 @@ alert('le télétravail est déja refusé')
 }
 else if(idrh==iduserinfo){
 
-  if (validationrhh!="refusé  par rh"){
+  if (validationrhh!=5){
     sendMail(emailemploye,"IPS Time:  Avis défavorable pour la demande de téletravail","Bonjour , Votre demande de téletravail du "+datedebut+" au "+datefin+" a été refusé par un avis défavorable définitive!")
-    const validationrh="refusé  par rh"
+    const validationrh=5
 
   if (validationn==''){
     const validation='en cours'
@@ -599,8 +599,8 @@ return (
 
 
      {/** <td>{c.nomrh}</td> */}
-      <td>{c.validationrh}</td>
-
+     <td>{c.validationrh ==0? "en_attente" :c.validationrh ==4 ? "validé par rh" : c.validationrh ==5 ? "refusé par rh":c.validationrh ==6 ?"annulé par rh":""}</td>
+     
       <td>{c.datedebut}</td>
       <td>{c.datefin}</td>
 
@@ -610,7 +610,7 @@ return (
       <td>
         <tr>
 
-        {c.validationrh=="validé par rh"  ?
+        {c.validationrh==4  ?
 <td>
 <a  className="btn-sm btn-success "  disabled={true} >
 
@@ -651,7 +651,7 @@ aria-describedby="alert-dialog-description"
 
  </td>
 :
-c.validationrh=="annulé par rh" ?
+c.validationrh==6 ?
 <td>
 <a  className="btn-sm btn-success "  disabled={true} >
 

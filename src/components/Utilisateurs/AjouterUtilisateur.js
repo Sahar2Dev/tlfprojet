@@ -1,42 +1,20 @@
-
-
 import React, { useEffect, useState } from 'react';
-
 import useFetch from '../useFetch';
 import MenuItem from '@mui/material/MenuItem';
 import TextField from '@mui/material/TextField';
-
 import { makeStyles } from "@material-ui/core/styles";
 import Checkbox from "@material-ui/core/Checkbox";
-
 import DropdownTreeSelect from 'react-dropdown-tree-select'
 import 'react-dropdown-tree-select/dist/styles.css'
-
-
 import { Alert } from '@mui/material';
-
-
-
-
-
 import { useMemo } from 'react';
-
 import InputLabel from "@material-ui/core/InputLabel";
 import FormControl from "@material-ui/core/FormControl";
 import Select from "@material-ui/core/Select";
 import { MenuProps } from "../Rapports/utils";
 import ListItemText from "@material-ui/core/ListItemText";
-
 import ListItemIcon from "@material-ui/core/ListItemIcon";
 import Mouchard from '../Mouchardd/Mouchard';
-
-
-
-
-
-
-
-
 import { useSelector } from 'react-redux';
 
 const AjouterUtilisateur = () => {
@@ -46,16 +24,10 @@ const AjouterUtilisateur = () => {
   const test=userinfo[0]
   if(Object.keys(userinfo).length !=0){ 
     var iduserinfo=test['id']
-   
-    
-
-    
   }
 
   const { data: roles, isloading, error } = useFetch(url+"role/")
-  
   const { data: plannings, isloading: lo, error: err } = useFetch(url+"planning/")
-
   const { data: TypesContrat = [], ll, oo } = useFetch(url+'contrats/')
   const[activite,setActivite]=useState(false)
   const[site,setSite]=useState('')
@@ -65,11 +37,9 @@ const AjouterUtilisateur = () => {
   const [matricule, setMatricule] = useState('');
   const [role, setRole] = useState('');
   const [email, setEmail] = useState('');
-
   const [sex, setSexe] = useState('');
   const [planningemp, setPlaningEmp] = useState([]);
   const [matriculecnss, setMatriculeCNSS] = useState('')
-
   const [datedemarrage, setDateDémarrage] = useState(null);
   const [datefin, setDatefin] = useState(null);
   const [rappel1, setRappel1] = useState(null);
@@ -82,7 +52,6 @@ const AjouterUtilisateur = () => {
   const [idcontrat, setIdContrat] = useState('');
   const [password, setPassword] = useState('');
   const [commentaire, setCommentaire] = useState('');
- 
   const [teletravail, setTeltravail] = useState('');
   const [situation_sociale, setSituationSociale] = useState('');
   const[solde,setSolde]=useState(null)
@@ -95,16 +64,13 @@ const AjouterUtilisateur = () => {
         setPreview(undefined)
         return
     }
-
     const objectUrl = URL.createObjectURL(image)
     setPreview(objectUrl)
-
   
     return () => URL.revokeObjectURL(objectUrl)
 }, [image]) */
 //
-  const { data: data, isloading: zzsx, error: esse } = useFetch(url+"arbo/")
-
+const { data: data, isloading: zzsx, error: esse } = useFetch(url+"arbo/")
 const[checkalert,setCheckAlert]=useState(false)
 const useStyles = makeStyles((theme)=>({
   root: {
@@ -166,7 +132,6 @@ console.log(typeof image)
         body: formdata
       }).then((data) => {
   console.log(JSON.stringify(data))
-
 data.json().then(user =>{
   Historique(user.id,user.arborescence)
 //window.location.reload(false);
@@ -182,7 +147,6 @@ alert("Il faut ajouter un email,département,Nom et Prénom et un mot de passe")
 const[alertdep,setAlertDep]=useState(false)
  const handlesubmit = (event) => {
   const is_active=true
-
   event.preventDefault();
    const userList = { email,user_name,last_name, matricule, role, arborescence, planningemp, matriculecnss, sex, datedemarrage, datefin, rappel1, rappel2, démarrageContrat, datedenaissance, CIN, nbEnfants, tel, idcontrat, password, commentaire,  teletravail, situation_sociale, solde, is_active,activite,site}
     console.warn("item", userList)
@@ -228,10 +192,6 @@ setCheckAlert(true)
           body: JSON.stringify(hist)
         }).then(() => {
     
-     
-            
-            
-      
         }
     
         )
@@ -241,23 +201,14 @@ setCheckAlert(true)
   ///select département and insert it 
 
   const [arborescence, setActualSelected] = React.useState([]);
-
-
-
   const [treeData, setTreeData] = React.useState([]);
-
   useEffect(()=>{
     setTreeData(data)
   })
   const handleChangearbo = (selected, allchecked) =>{
     let results = allchecked.map(({value})=>parseInt(value));
-   
     setActualSelected(results)
   }
-  
-  
-  
-  
    const dropdown = useMemo(()=>{
     return(
   
@@ -292,15 +243,10 @@ setCheckAlert(true)
  
   return (
     <div>
-
       <div>
-    
- 
- 
         <button type="button" className="btn btn-primary" data-toggle="modal" data-target="#ajouteruser">
           Ajouter Un Employé
         </button>
-      
         <div className="modal fade" id="ajouteruser" role="dialog" aria-labelledby="ajouteruser" aria-hidden="true">
           <div className="modal-dialog modal-dialog-centered modal-lg" role="document">
             <div className="modal-content">
@@ -311,11 +257,7 @@ setCheckAlert(true)
                 </button>
               </div>
               <div className="modal-body">
-         
-
           <form >
-               
-
                <div className="row">
                  <div className="col-md-4">
                   <div className='row'>
@@ -657,7 +599,6 @@ setCheckAlert(true)
                <div className='row'>
             {/**     <div className='col-md-4  pt-2'>
                
-
                  <input type="file"  name="myImage" onChange={(event)=>{setImage(event.target.files[0])}}/>
                  {image &&  <img src={preview} className={classes.imageemploye} /> }
                  </div> */}

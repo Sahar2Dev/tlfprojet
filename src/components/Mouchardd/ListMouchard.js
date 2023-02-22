@@ -16,11 +16,19 @@ import 'datatables.net-buttons/js/buttons.colVis';
 import 'datatables.net-buttons/js/buttons.html5';
 import frdatatable from "../../frdatatable.json"
 import $ from "jquery";
+import { useSelector } from "react-redux";
 const ListMouchard = () => {
   const[openn,setOpenn]=useState(false)
   const [post,setPost]=useState(false)
   const url=process.env.React_App_URL;
-
+  const userinfo =useSelector(state => state.userinfo);
+  const test=userinfo[0]
+  if(Object.keys(userinfo).length !=0){ 
+    var iduserinfo=test['id']
+   var view_planinng_rh=test['view_planinng_rh']
+  
+    
+  }
   React.useEffect(()=>{
 
     
@@ -34,6 +42,7 @@ const ListMouchard = () => {
     setPost(true)}
   }
   ,[openn,post])
+  const { data: users = [] } = useFetch(url+"user/")
   $(document).ready(function () {
    
     $('#datatablemouch').DataTable({
@@ -61,7 +70,7 @@ const ListMouchard = () => {
   
 });
 
-    const { data: mouchard = [] } = useFetch(url+"MouchardList/")
+    const { data: mouchard = [],isloading:ll ,error:ee} = useFetch(url+"MouchardList/"+ iduserinfo)
     return ( 
         <div className="container-fluid mt-5">
         <div className="row">
@@ -72,7 +81,9 @@ const ListMouchard = () => {
       </div>
       
 
-              {post?
+              {mouchard.length==0 && ll==true? <Backdrop  open={openn}>
+  <CircularProgress  style={{top : '50%'}} color="black" />
+  </Backdrop>:
         <div className="table-responsive">
         <ScrollContainer className="scroll-container">
         <table className="display" id="datatablemouch">
@@ -95,14 +106,14 @@ const ListMouchard = () => {
  
             {mouchard.map(m =>
                     <tr key={m.id}>
-                         <td>{m.datenow}</td>
-                       {/**  <td>   {users.filter(x=>x.id==m.personne_name).map(x=><>{x.user_name}  {x.last_name}</>)}</td> */}
-                  <td>{m.nomp}</td>
-                   <td>{m.employe_name}</td>
-                   <td>{m.matriculeemploye}</td>
-                   <td>{m.objet}</td>
+                      <td>{m.datenow}</td>
+                      <td>{users.filter(x=>x.id==m.idper_modifie).map(x=><>{x.user_name}  {x.last_name}</>)}</td> 
+                     <td>{m.nompersonne}</td>
+                  
+                     <td>{m.matpersonne}</td>
+                     <td>{m.objet}</td>
                       <td>{m.anciennevaluer}</td>
-                   <td>{m.nouvellevaluer}</td>
+                      <td>{m.nouvellevaluer}</td>
                    
                   
                 
@@ -115,10 +126,7 @@ const ListMouchard = () => {
           </tbody>
         </table>
         </ScrollContainer>
-        </div> :( <>{mouchard.length==0 ? <Backdrop  open={openn}>
-  <CircularProgress  style={{top : '50%'}} color="black" />
-  </Backdrop>:setPost(true)}</>)
-  
+        </div>   
   
   } 
         

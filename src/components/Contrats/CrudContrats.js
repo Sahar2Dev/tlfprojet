@@ -194,21 +194,14 @@ const url=process.env.React_App_URL;
                       <td >{contrat.contratname}</td>
                       <td>
                         <div className="row">
-
                           <div className="col-md-6">
-
                             <a onClick={() => SelectContrat(contrat.id)} data-toggle="modal" data-target="#modalcontrat" ><EditIcon
                               className={classes.icon}
                             /></a>
                           </div>
-
-                          
                           {view_contrat_rh==true?"":     <div className="col-md-6">
                             <a onClick={() => { handleClickOpen(); setcontratIddelete(contrat.id); }}  ><DeleteIcon className={classes.icon} /></a>
-
-
                           </div>}
-                     
                         </div>
                       </td> 
                     </tr>
@@ -237,6 +230,7 @@ aria-describedby="alert-dialog-description"
   </Button>
 </DialogActions>
 </Dialog>
+
 
              
          

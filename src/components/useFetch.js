@@ -22,6 +22,7 @@ const useFetch =(url) =>{
             },
           }).then( res =>{
            setData(res.data) 
+           setload(false)
           }
             
           ).catch( err =>{
